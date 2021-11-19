@@ -16,7 +16,12 @@ var lightMap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/
 
 
 
-
+d3.json(earthquakeURL).then((data) => {
+    //Function to determine size of markers based on magnitude.
+    function markerSize(magnitude) {
+        return magnitude * 10;
+    }
+});
 
 
 
