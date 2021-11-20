@@ -44,6 +44,19 @@ d3.json(earthquakeURL).then((data) => {
             return "#FF0000"
         }
     }
+    //Function to create the markers.
+    function quakeMarkers(feature) {
+        return {
+            fillColor: markerColor(feature.properties.mag),
+            radius: markerSize(feature.properties.mag),
+            weight: 0.5,
+            opacity: 1,
+            fillOpacity: 1,
+            stroke: true,
+            color: "#000000"
+        };
+    }
+    
 });
 
 
