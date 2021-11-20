@@ -21,6 +21,29 @@ d3.json(earthquakeURL).then((data) => {
     function markerSize(magnitude) {
         return magnitude * 10;
     }
+
+    //Function to determine the color of the marker based on magnitude.
+    function markerColor(magnitude) {
+        if (magnitude < 1 ) {
+            return "#66FF66"
+        } else if (magnitude < 2) {
+            return "#00FF00"
+        } else if (magnitude < 3) {
+            return "#99FF33"
+        } else if (magnitude < 4) {
+            return "#CCFF99"
+        } else if (magnitude < 5) {
+            return "#FFFF99"
+        } else if (magnitude < 6) {
+            return "#FFFF33"
+        } else if (magnitude < 7) {
+            return "#FFB266"
+        } else if (magnitude < 8) {
+            return "#FF6666"
+        } else if (magnitude <9) {
+            return "#FF0000"
+        }
+    }
 });
 
 
