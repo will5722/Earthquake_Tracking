@@ -19,7 +19,7 @@ var lightMap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/
 d3.json(earthquakeURL).then((data) => {
     //Function to determine size of markers based on magnitude.
     function markerSize(magnitude) {
-        return magnitude * 10;
+        return magnitude * 5;
     }
 
     //Function to determine the color of the marker based on magnitude.
@@ -56,7 +56,15 @@ d3.json(earthquakeURL).then((data) => {
             color: "#000000"
         };
     }
-    
+    L.geoJson(data, {
+        pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng);
+        },
+        style: quakeMarkers,
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
+        }
+    }).addTo(myMap);
 });
 
 
