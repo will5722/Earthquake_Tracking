@@ -40,8 +40,10 @@ d3.json(earthquakeURL).then((data) => {
             return "#FFB266"
         } else if (magnitude < 8) {
             return "#FF6666"
-        } else if (magnitude <9) {
+        } else if (magnitude < 9) {
             return "#FF0000"
+        } else if (magnitude <= 10) {
+            return "#8B0000"
         }
     }
     //Function to create the markers.
@@ -66,18 +68,18 @@ d3.json(earthquakeURL).then((data) => {
         }
     }).addTo(myMap);
 
-    //Add legend to map.
+    //Add legend to map. 
     var legend = L.control({
         position: "bottomright"
     });
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend");
         var magnitudeList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        var colors = ["#66FF66", "#00FF00", "#99FF33", "#CCFF99", "#FFFF99", "#FFFF33", "#FFB266", "#FF6666", "#FF0000"];
-        var labels = [];
+        var colors = ["#66FF66", "#00FF00", "#99FF33", "#CCFF99", "#FFFF99", "#FFFF33", "#FFB266", "#FF6666", "#FF0000", "#8B0000"];
+        //var labels = [];
 
         for (var i = 0; i < magnitudeList.length; i++) {
-            div.innerHTML += "<i style='background: " + colors[i] + "'></i> " + magnitudeList[i] + 
+            div.innerHTML += "<li style='background-color: " + markerColor(magnitudeList[i]) + "'></i> " + magnitudeList[i] + 
             (magnitudeList[i + 1] ? "&ndash;" + magnitudeList[i + 1] + '<br>' : '+');
         } return div;
     };
