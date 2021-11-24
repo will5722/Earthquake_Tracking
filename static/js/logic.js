@@ -23,33 +23,35 @@ d3.json(earthquakeURL).then((data) => {
     }
 
     //Function to determine the color of the marker based on magnitude.
-    function markerColor(magnitude) {
-        if (magnitude < 1 ) {
+    function markerColor(depth) {
+        if (depth < 10 ) {
             return "#66FF66"
-        } else if (magnitude < 2) {
+        } else if (depth < 20) {
             return "#00FF00"
-        } else if (magnitude < 3) {
+        } else if (depth < 30) {
             return "#99FF33"
-        } else if (magnitude < 4) {
+        } else if (depth < 40) {
             return "#CCFF99"
-        } else if (magnitude < 5) {
+        } else if (depth < 50) {
             return "#FFFF99"
-        } else if (magnitude < 6) {
+        } else if (depth < 60) {
             return "#FFFF33"
-        } else if (magnitude < 7) {
+        } else if (depth < 70) {
             return "#FFB266"
-        } else if (magnitude < 8) {
+        } else if (depth < 80) {
             return "#FF6666"
-        } else if (magnitude < 9) {
+        } else if (depth < 90) {
             return "#FF0000"
-        } else if (magnitude <= 10) {
+        } else if (depth < 100) {
+            return "#B22222"
+        } else {
             return "#8B0000"
         }
     }
     //Function to create the markers.
     function quakeMarkers(feature) {
         return {
-            fillColor: markerColor(feature.properties.mag),
+            fillColor: markerColor(feature.geometry.coordinates[2]),
             radius: markerSize(feature.properties.mag),
             weight: 0.5,
             opacity: 1,
@@ -64,7 +66,7 @@ d3.json(earthquakeURL).then((data) => {
         },
         style: quakeMarkers,
         onEachFeature: function(feature, layer) {
-            layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
+            layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place + "<br>Depth: " + feature.geometry.coordinates[2]);
         }
     }).addTo(myMap);
 
@@ -74,13 +76,13 @@ d3.json(earthquakeURL).then((data) => {
     });
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend");
-        var magnitudeList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        var colors = ["#66FF66", "#00FF00", "#99FF33", "#CCFF99", "#FFFF99", "#FFFF33", "#FFB266", "#FF6666", "#FF0000", "#8B0000"];
+        var depthList = [10, 20, 30, 40, 50, 60, 70, 80, 90];
+        var colors = ["#66FF66", "#00FF00", "#99FF33", "#CCFF99", "#FFFF99", "#FFFF33", "#FFB266", "#FF6666", "#FF0000", "#B22222"];
         //var labels = [];
 
-        for (var i = 0; i < magnitudeList.length; i++) {
-            div.innerHTML += "<li style='background-color: " + markerColor(magnitudeList[i]) + "'></i> " + magnitudeList[i] + 
-            (magnitudeList[i + 1] ? "&ndash;" + magnitudeList[i + 1] + '<br>' : '+');
+        for (var i = 0; i < depthList.length; i++) {
+            div.innerHTML += "<li style='background-color: " + markerColor(depthList[i]) + "'></i> " + depthList[i] + 
+            (depthList[i + 1] ? "&ndash;" + depthList[i + 1] + '<br>' : '+');
         } return div;
     };
     legend.addTo(myMap);
